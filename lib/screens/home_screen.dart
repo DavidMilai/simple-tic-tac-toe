@@ -8,11 +8,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<String> playerOne = [], playerTwo = [];
+  List<int> playerOne = [], playerTwo = [];
 
   late List<String> board;
 
-  winningSpots() {
+  checkforWinner(String value) {
     //board[0,1,2]
     //board[0,3,6]
     //board[0,4,8]
@@ -21,6 +21,32 @@ class _HomeScreenState extends State<HomeScreen> {
     //board[2,4,6]
     //board[3,4,5]
     //board[6,7,8]
+    if (board[0] == value && board[1] == value && board[2] == value) {
+      print("$value won");
+    } else if (board[0] == value && board[3] == value && board[6] == value) {
+      print("$value won");
+    } else if (board[0] == value && board[4] == value && board[8] == value) {
+      print("$value won");
+    } else if (board[1] == value && board[4] == value && board[7] == value) {
+      print("$value won");
+    } else if (board[2] == value && board[5] == value && board[8] == value) {
+      print("$value won");
+    } else if (board[2] == value && board[4] == value && board[6] == value) {
+      print("$value won");
+    } else if (board[3] == value && board[4] == value && board[5] == value) {
+      print("$value won");
+    } else if (board[6] == value && board[7] == value && board[8] == value) {
+      print("$value won");
+    }
+  }
+
+  void playGame(int index) {
+    print(index);
+    if (board[index] == 'Y') {
+      setState(() {
+        board[index] = 'X';
+      });
+    }
   }
 
   @override
@@ -45,9 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Tic Tac Toe"),
-      ),
+      appBar: AppBar(title: Text("Tic Tac Toe")),
       body: Column(
         children: [
           Expanded(
@@ -60,14 +84,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisSpacing: 0,
               ),
               itemCount: 9,
-              itemBuilder: (context, index) => Container(
-                height: size.width / 4,
-                width: size.width / 4,
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.black)),
-                child: GestureDetector(
-                    onTap: () => print("hello $index"),
-                    child: Text("to select")),
+              itemBuilder: (context, index) => GestureDetector(
+                onTap: () {
+                  playGame(index);
+                  playerOne.add(index);
+                },
+                child: Container(
+                  height: size.width / 4,
+                  width: size.width / 4,
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.black)),
+                  child: Center(
+                      child: Text(
+                    board[index] == "Y" ? "" : board[index],
+                    style: TextStyle(fontSize: 40),
+                  )),
+                ),
               ),
             ),
           ),
