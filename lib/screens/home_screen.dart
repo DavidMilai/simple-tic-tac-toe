@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:simple_tic_tac_toe/services/score_card_service.dart';
 import 'package:simple_tic_tac_toe/widgets/display_utils.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,8 +12,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool isPlaying = true;
-
-  List<int> playerOne = [], playerTwo = [];
 
   late List<String> board;
 
@@ -115,11 +115,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.all(10),
                   child: Column(
                     children: [
-                      Text(
-                        "Player 1\nX",
-                        style: TextStyle(fontSize: 20),
-                        textAlign: TextAlign.center,
-                      ),
+                      Text("Player 1",
+                          style: TextStyle(fontSize: 20),
+                          textAlign: TextAlign.center),
+                      Selector<ScoreCardService, int>(
+                          selector: (context, scoreCardService) =>
+                              scoreCardService.playerOneScores,
+                          builder: (context, scores, _) {
+                            return Text("X - $scores");
+                          }),
                       if (isPlaying)
                         Container(
                           height: 10,
@@ -137,10 +141,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       Text(
-                        "Player 2\nO",
+                        "Player 2\n",
                         style: TextStyle(fontSize: 20),
                         textAlign: TextAlign.center,
                       ),
+                      Selector<ScoreCardService, int>(
+                          selector: (context, scoreCardService) =>
+                              scoreCardService.playerTwoScores,
+                          builder: (context, scores, _) {
+                            return Text("O - $scores");
+                          }),
                       if (!isPlaying)
                         Container(
                           height: 10,
@@ -169,7 +179,6 @@ class _HomeScreenState extends State<HomeScreen> {
               itemBuilder: (context, index) => GestureDetector(
                 onTap: () {
                   playGame(index);
-                  playerOne.add(index);
                 },
                 child: Container(
                   height: size.width / 4,

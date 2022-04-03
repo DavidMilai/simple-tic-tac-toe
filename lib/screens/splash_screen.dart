@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_tic_tac_toe/data/database.dart';
 
 import '../routes.dart';
 
@@ -11,15 +12,19 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   void navigate() async {
-    await Future.delayed(Duration(seconds: 1));
     Navigator.pushReplacementNamed(context, RouteConfig.homeScreen);
+  }
+
+  void initDatabase() async {
+    await db.init();
+    await Future.delayed(Duration(seconds: 1), navigate);
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    navigate();
+    initDatabase();
   }
 
   @override
