@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Simple Tic Tac Toe',
-        theme: ThemeData(primarySwatch: Colors.lime),
+        theme: ThemeData(primarySwatch: Colors.amber),
         routes: routes,
         initialRoute: RouteConfig.defaultRoute,
         debugShowCheckedModeBanner: false,

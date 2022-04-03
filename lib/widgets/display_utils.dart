@@ -32,3 +32,37 @@ Future<Null> alert(title, body,
         );
       });
 }
+
+Future<bool> confirm(title, body,
+    {cancelButtonText = "CANCEL",
+    okButtonText = "OK",
+    required BuildContext context}) async {
+  return (await showDialog<bool>(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: title == null ? null : Text(title),
+              content: body != null
+                  ? SingleChildScrollView(
+                      child: Text(body),
+                    )
+                  : null,
+              actions: <Widget>[
+                FlatButton(
+                  child: Text(cancelButtonText ?? "CANCEL"),
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                ),
+                FlatButton(
+                  child: Text(okButtonText ?? "OK"),
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                ),
+              ],
+            );
+          })) ??
+      false;
+}
