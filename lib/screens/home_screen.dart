@@ -1,5 +1,5 @@
-import 'package:alert/alert.dart';
 import 'package:flutter/material.dart';
+import 'package:simple_tic_tac_toe/widgets/display_utils.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,34 +17,36 @@ class _HomeScreenState extends State<HomeScreen> {
 
   checkforWinner(String value) {
     if (board[0] == value && board[1] == value && board[2] == value) {
-      print("$value won");
+      winnerDialog(value);
       restartGame();
-      Alert(message: 'Test').show();
     } else if (board[0] == value && board[3] == value && board[6] == value) {
-      print("$value won");
+      winnerDialog(value);
       restartGame();
     } else if (board[0] == value && board[4] == value && board[8] == value) {
+      winnerDialog(value);
       restartGame();
-      print("$value won");
     } else if (board[1] == value && board[4] == value && board[7] == value) {
+      winnerDialog(value);
       restartGame();
-      print("$value won");
     } else if (board[2] == value && board[5] == value && board[8] == value) {
+      winnerDialog(value);
       restartGame();
-      print("$value won");
     } else if (board[2] == value && board[4] == value && board[6] == value) {
+      winnerDialog(value);
       restartGame();
-      print("$value won");
     } else if (board[3] == value && board[4] == value && board[5] == value) {
+      winnerDialog(value);
       restartGame();
-      print("$value won");
     } else if (board[6] == value && board[7] == value && board[8] == value) {
+      winnerDialog(value);
       restartGame();
-      print("$value won");
+    } else if (!board.contains('Y')) {
+      alert("Drawn game", "GG guys, restart the game", context: context);
+      restartGame();
     }
   }
 
-  void playGame(int index) {
+  playGame(int index) {
     if (board[index] == 'Y') {
       setState(() {
         if (isPlaying) {
@@ -57,6 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
     checkforWinner("X");
     checkforWinner("O");
     isPlaying = !isPlaying;
+  }
+
+  winnerDialog(String winner) {
+    alert("We have a winner", "🎉 $winner won the game! 🎉", context: context);
   }
 
   void restartGame() {
